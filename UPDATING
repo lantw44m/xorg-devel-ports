@@ -1,6 +1,3 @@
-
-** This needs at least a review **
-
 20120105:
   AFFECTS: users of mesa based ports (libGL etc) and xorg-server.
   AUTHOR: x11@FreeBSD.org
