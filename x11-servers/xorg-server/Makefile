@@ -23,14 +23,15 @@ RUN_DEPENDS=	${LOCALBASE}/share/X11/xkb/rules/base.xml:${PORTSDIR}/x11/xkeyboard
 XORG_CAT=	xserver
 
 .if defined(WITH_NEW_XORG)
-XORG_VERSION=	1.10.4
-XORG_REVISION=	1
+XORG_VERSION=	1.10.6
+XORG_REVISION=	0
 PLIST_SUB+=	OLD="@comment " NEW=""
 .else
 XORG_VERSION=	1.7.7
 XORG_REVISION=	4
 PLIST_SUB+=	OLD="" NEW="@comment "
 EXTRA_PATCHES+=	${FILESDIR}/extra-include_eventstr.h
+EXTRA_PATCHES+=	${FILESDIR}/extra-patch-os-utils.c
 .endif
 
 USE_GMAKE=	yes
