@@ -37,7 +37,7 @@ VIDEO_ON+=	sunffb
 VIDEO_ON+=	openchrome
 .endif
 
-.if ${ARCH} == "amd64" || ${ARCH} == "i386"
+.if (${ARCH} == "amd64" || ${ARCH} == "i386") && !defined(WITH_NEW_XORG)
 VIDEO_ON+=	intel
 .endif
 
