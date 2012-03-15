@@ -26,6 +26,8 @@ XORG_CAT=	xserver
 XORG_VERSION=	1.10.6
 XORG_REVISION=	0
 PLIST_SUB+=	OLD="@comment " NEW=""
+EXTRA_PATCHES+=	${FILESDIR}/extra-hw_dmx_glxProxy_compsize.h \
+		${FILESDIR}/extra-hw_dmx_glxProxy_glxcmds.h
 .else
 XORG_VERSION=	1.7.7
 XORG_REVISION=	4
