@@ -27,7 +27,7 @@ USE_XORG=	glproto \
 MAN4=		intel.4x
 
 .if defined(WITH_NEW_XORG)
-INTEL_VERSION=	2.21.4
+INTEL_VERSION=	2.21.6
 INTEL_REVISION=	0
 CONFIGURE_ARGS+=	--enable-sna
 MAKE_JOBS_UNSAFE=yes
@@ -36,8 +36,7 @@ EXTRA_PATCHES+=	${PATCHDIR}/extra-clang \
 		${PATCHDIR}/extra-src_sna_compiler.h \
 		${PATCHDIR}/extra-src_sna_kgem.c \
 		${PATCHDIR}/extra-src__sna__sna_threads.c \
-		${PATCHDIR}/extra-i915kms \
-		${PATCHDIR}/extra-configure-sna
+		${PATCHDIR}/extra-i915kms
 LIB_DEPENDS+=	xcb-util:${PORTSDIR}/x11/xcb-util
 .else
 INTEL_VERSION=	2.7.1
