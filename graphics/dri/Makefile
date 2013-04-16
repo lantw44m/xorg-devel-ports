@@ -23,25 +23,17 @@ ALL_DRI_DRIVERS+=I810 MACH64 MGA R128 R300 R600 SAVAGE SIS TDFX UNICHROME
 
 .include "${.CURDIR}/../../graphics/libGL/bsd.mesalib.mk"
 
-.if ${ARCH} == "ia64"
-BROKEN=		does not install on ia64
+OPTIONS_DEFINE_i386=	${ALL_DRI_DRIVERS}
+OPTIONS_DEFINE_amd64=	${OPTIONS_DEFINE_i386}
+
+.if defined(WITH_NEW_XORG)
+OPTIONS_DEFINE_powerpc=	RADEON SWRAST
+OPTIONS_DEFINE_sparc64=	RADEON SWRAST
+.else
+OPTIONS_DEFINE_powerpc=	MACH64 RADEON SWRAST TDFX
+OPTIONS_DEFINE_sparc64=	MACH64 RADEON SWRAST
 .endif
 
-.if ${ARCH} == "amd64" || ${ARCH} == "i386"
-OPTIONS_DEFINE=	${ALL_DRI_DRIVERS}
-.elif ${ARCH} == "powerpc"
-. if defined(WITH_NEW_XORG)
-OPTIONS_DEFINE=	RADEON SWRAST
-. else
-OPTIONS_DEFINE=	MACH64 RADEON SWRAST TDFX
-. endif
-.elif ${ARCH} == "sparc64"
-. if defined(WITH_NEW_XORG)
-OPTIONS_DEIFNE=	RADEON SWRAST
-. else
-OPTIONS_DEFINE=	MACH64 RADEON SWRAST
-. endif
-.endif
 OPTIONS_DEFAULT=${OPTIONS_DEFINE}
 
 I810_DESC=	Include DRI support for Intel i810
@@ -53,7 +45,7 @@ R128_DESC=	Include DRI support for AMD/ATI R128
 R200_DESC=	Include DRI support for AMD/ATI R200
 R300_DESC=	Include DRI support for AMD/ATI R300
 R600_DESC=	Include DRI support for AMD/ATI R600
-RADEON_DESC=	Include DRI support for AMD/ATI R100
+RADEON_DESC=	Include DRI support for AMD/ATI RADEON
 SAVAGE_DESC=	Include DRI support for S3/Via Savage
 SIS_DESC=	Include DRI support for SiS 300 and 6326
 SWRAST_DESC=	Include generic software DRI support
@@ -72,7 +64,9 @@ PLIST_SUB+=	${_d}_DRIVER="@comment "
 .endif
 .endfor
 
-.include <bsd.port.pre.mk>
+.if ${ARCH} == "ia64"
+BROKEN=		does not install on ia64
+.endif
 
 .if !(${ARCH} == "amd64" || ${ARCH} == "i386")
 CONFIGURE_ARGS+=--disable-gallium-intel
@@ -82,4 +76,4 @@ CONFIGURE_ARGS+=--with-dri-drivers="${DRI_DRIVERS:L}"
 do-install:
 	cd ${WRKSRC}/src/mesa; ${GMAKE} install-dri
 
-.include <bsd.port.post.mk>
+.include <bsd.port.mk>
