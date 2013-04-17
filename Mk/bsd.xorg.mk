@@ -18,7 +18,8 @@ Xorg_Pre_Include=		bsd.xorg.mk
 # Some notes:
 #
 # app - Installs applications, no shared libraries.
-# data - nothing I could factorize
+# macros - special category for xorg-macros.
+# data - Installs only data.
 # doc - no particular notes
 # driver - input depends on inputproto/randrproto at least
 #          video depends on randrproto/renderproto at least
@@ -41,6 +42,11 @@ MASTER_SITE_SUBDIR?=	individual/${XORG_CAT}
 # All xorg ports needs pkgconfig to build, but some ports look for pkgconfig and
 # then continues the build.
 USE_PKGCONFIG=	build
+
+# All xorg ports needs xorg-macros.
+. if ${PORTNAME} != xorg-macros
+USE_XORG+=      xorg-macros
+. endif
 
 . if ${XORG_CAT} == "app"
 # Nothing at the moment
